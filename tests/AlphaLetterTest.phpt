@@ -5,11 +5,11 @@ namespace CZechBoY\Morseovka;
 use Tester\Assert;
 use Tester\TestCase;
 
-final class LetterTest extends TestCase
+final class AlphaLetterTest extends TestCase
 {
     public function testAlphaLetter()
     {
-        $letter = new Letter('a');
+        $letter = new AlphaLetter('a');
         
         Assert::same((string)$letter, 'a');
     }
@@ -17,7 +17,7 @@ final class LetterTest extends TestCase
     public function testNumericThrowsException()
     {
         Assert::throws(function() {
-            $letter = new Letter('9');
+            $letter = new AlphaLetter('9');
         }, NonAlphaLetterException::class, '"9" is not a alpha letter.');
     }
 }

@@ -7,18 +7,42 @@ use Tester\TestCase;
 
 final class AlphaLetterTest extends TestCase
 {
-    public function testAlphaLetter()
+    /**
+     * @param string $alphaLetter
+     *
+     * @dataProvider dataAlphaLetters
+     */
+    public function testAlphaLetter(string $alphaLetter)
     {
-        $letter = new AlphaLetter('a');
+        $letter = new AlphaLetter($alphaLetter);
         
-        Assert::same((string)$letter, 'a');
+        Assert::same($alphaLetter, (string)$letter);
     }
     
-    public function testNumericThrowsException()
+    /**
+     * @param string $invalidAlphaLetter
+     *
+     * @dataProvider dataInvalidAlphaLetters
+     */
+    public function testNumericThrowsException(string $invalidAlphaLetter)
     {
-        Assert::throws(function() {
-            $letter = new AlphaLetter('9');
-        }, NonAlphaLetterException::class, '"9" is not a alpha letter.');
+        Assert::throws(function() use ($invalidAlphaLetter) {
+            $letter = new AlphaLetter($invalidAlphaLetter);
+        }, NonAlphaLetterException::class, sprintf('"%s" is not a alpha letter.', $invalidAlphaLetter));
+    }
+    
+    protected function dataAlphaLetters(): array
+    {
+        return [
+            ['a'],
+        ];
+    }
+    
+    protected function dataInvalidAlphaLetters(): array
+    {
+        return [
+            ['9'],
+        ];
     }
 }
 
